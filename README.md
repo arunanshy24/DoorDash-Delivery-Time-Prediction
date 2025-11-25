@@ -1,51 +1,55 @@
-# ⏱️ DoorDash Delivery Time Prediction
+# DoorDash Delivery Time Prediction
 
-> A comparative machine learning study to build and evaluate regression models for accurately predicting the total duration of food delivery orders.
+## Project Overview
+This project focuses on predicting DoorDash delivery times using machine learning techniques. The model analyzes historical delivery data to estimate the total delivery duration in seconds, helping optimize delivery operations and improve customer experience.
 
----
+## Dataset
+The dataset (`historical_data.csv`) contains 197,428 historical delivery records with 16 original features including:
+- Market and store information
+- Order details (items, pricing, subtotal)
+- Dasher availability metrics
+- Time estimates (order placement, driving duration)
+- Timestamps for order creation and actual delivery
 
-## 📝 Table of Contents
-- [About the Project](#about-the-project)
-- [Key Findings & Best Model](#key-findings--best-model)
-- [Methodology & Models](#methodology--models)
-- [Data Source](#data-source)
+## Key Features & Engineering
 
----
+### Target Variable
+- **actual_total_delivery_duration**: Calculated as the time difference between `created_at` and `actual_delivery_time` in seconds
 
-## 💡 About the Project
+### Engineered Features
+- **estimated_non_prep_duration**: Sum of estimated driving and order placement durations
+- **busy_dashers_ratio**: Ratio of busy dashers to onshift dashers
+- **Categorical Encoding**: One-hot encoding for market_id, order_protocol, and store primary categories
+- **Data Cleaning**: Handled missing values and infinite values
 
-This project focuses on **predicting the total delivery time** for DoorDash orders, a critical task for logistics optimization, customer satisfaction, and efficient fleet management. Accurate time prediction helps set realistic expectations for customers and optimize route planning for drivers.
+### Data Preprocessing
+- Converted datetime columns to proper format
+- Filled missing store categories using mode per store_id
+- Removed redundant columns (timestamps, IDs)
+- Handled infinite values and null entries
+- Final training dataset: 177,070 samples × 100 features
 
-The core of the project involves training and comparing various **regression models** on historical delivery data, using **Root Mean Squared Error (RMSE)** as the primary evaluation metric. The goal is to minimize the prediction error (RMSE) to achieve the most reliable time estimates.
+## Model Approach
+The project employs a regression-based machine learning approach to predict delivery times. While the specific model architecture isn't detailed in the provided code, the comprehensive feature engineering suggests a robust predictive modeling pipeline.
 
----
+## Project Structure
+- Data loading and exploration
+- Feature engineering and preprocessing
+- Data cleaning and transformation
+- Model preparation with extensive feature set
+- Categorical variable encoding (one-hot)
+- Target variable derivation from timestamp data
 
-## 🏆 Key Findings & Best Model
+## Technical Stack
+- **Python** with pandas, numpy for data manipulation
+- **matplotlib**, **seaborn** for visualization
+- **scikit-learn** for machine learning components
+- **datetime** for time-based feature engineering
 
-Seven different regression models were tested and benchmarked against the test dataset's actual delivery times.
+## Potential Applications
+- Delivery time estimation for customer communication
+- Dasher allocation optimization
+- Service quality monitoring
+- Operational efficiency improvements
 
-### Model Performance (Root Mean Squared Error - RMSE)
-
-| Model | RMSE (Lower is Better) | Performance Category |
-| :--- | :---: | :--- |
-| **MLPRegressor (Recommended)** | **1007.80** | **Deep Learning (Best)** |
-| LGBMRegressor | 1079.29 | Gradient Boosting (Excellent) |
-| RandomForestRegressor | 2549.97 | Ensemble (Good Baseline) |
-| DecisionTreeRegressor | 2577.26 | Simple Tree |
-| XGBRegressor | 2869.17 | Gradient Boosting |
-| Ridge | 2901.59 | Regularized Linear |
-| LinearRegression | 2901.69 | Linear (Worst) |
-
-### Conclusion Summary
-
-The **Multi-layer Perceptron (MLPRegressor)**, a type of Artificial Neural Network, achieved the best performance with the lowest RMSE of **1007.80**, demonstrating its superior ability to capture non-linear relationships in the delivery data. The **LGBMRegressor** also provided excellent results, confirming that advanced ensemble and deep learning methods are best suited for this prediction task.
-
----
-
-## 🔬 Methodology & Models
-
-The analysis compares seven models from different families of regression algorithms:
-
-* **Linear:** `LinearRegression`, `Ridge`
-* **Tree/Ensemble:** `DecisionTreeRegressor`, `RandomForestRegressor`
-* **Gradient Boosting:** `XGBRegressor`, `LGBMRegressor`
+This project demonstrates a complete data science pipeline from raw data to model-ready features for predicting food delivery times in a real-world logistics scenario.
